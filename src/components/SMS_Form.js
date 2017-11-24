@@ -8,21 +8,29 @@ const inputGroupStyle = {
 };
 
 const labelStyle = {
-	display: 'inline-block',
+	display: 'block',
 	fontSize: '20px',
 	width: '100px',
-	height: '100%',
-	marginRight: '8px',
-	textAlign: 'right'
+	height: '100%'
 };
 
 const inputStyle = {
-	display: 'inline-block',
-	minHeight: '20px',
+	display: 'block',
+	width: '400px',
 	padding: '10px',
+	marginBottom: '25px',
 	border: '1px solid grey',
 	borderRadius: '3px'
 };
+
+const msgFooterStyle = {
+	display: 'block',
+	fontSize: '0.7rem',
+	textAlign: 'right',
+	marginTop: '-20px',
+	marginRight: '45px'
+};
+
 class SMS_Form extends Component {
 	state = {
 		to: '',
@@ -39,7 +47,11 @@ class SMS_Form extends Component {
 
 	onSubmit = () => {
 		const { to, message } = this.state;
-		this.props.onSubmit(to, message);
+		if (to.trim() && message.trim()) {
+			this.props.onSubmit(to, message);
+		} else {
+			alert('Please enter all values');
+		}
 	};
 
 	onReset = () => {
@@ -50,27 +62,31 @@ class SMS_Form extends Component {
 	};
 
 	render() {
+		const { to, message } = this.state;
 		return (
 			<div>
 				<div style={inputGroupStyle}>
-					<label style={labelStyle}> To: </label>
-					<input name="to" style={inputStyle} value={this.state.to} onChange={this.onChange} />
+					<label style={labelStyle}> To </label>
+					<input name="to" style={inputStyle} value={to} onChange={this.onChange} />
 				</div>
 				<div style={inputGroupStyle}>
-					<label style={labelStyle}> Message: </label>
+					<label style={labelStyle}> Message </label>
 					<textarea
 						name="message"
 						style={inputStyle}
 						rows="10"
 						cols="30"
-						value={this.state.message}
-                  onChange={this.onChange}
-                  maxLength="459"
+						value={message}
+						onChange={this.onChange}
+						maxLength="459"
 					/>
+					<label style={msgFooterStyle}>
+						{message.length}/{459}{' '}
+					</label>
 				</div>
 
-				<Button label="Send" onClick={this.onSubmit} />
-				<Button label="Reset" onClick={this.onReset} />
+				<Button label="Send" color="#3498db" onClick={this.onSubmit} />
+				<Button label="Reset" color="orange" onClick={this.onReset} />
 			</div>
 		);
 	}

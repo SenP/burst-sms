@@ -1,21 +1,10 @@
 import React from 'react';
+import './Button.css';
 
-const buttonStyle = {
-   display: "inline-block",
-   padding: "10px",
-   margin: "5px",
-   width: "200px",
-   background: "blue",
-   color: "white",
-   textAlign: "center",
-   textDecoration: "none",
-   borderRadius: "5px"
-}
-
-export default function Button({ label, onClick }) {
+export default function Button({ label = '', color = 'blue', onClick }) {
 	return (
-		<a href="#" style={buttonStyle} onClick={onClick}>
-			{label}
-		</a>
+		<div className="button" style={{ background: color }} onClick={onClick}>
+			<a href="#"> {label}</a>
+		</div>
 	);
 }
